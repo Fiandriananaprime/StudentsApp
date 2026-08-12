@@ -1,0 +1,10 @@
+{
+  "description": "Manage student records efficiently with a user-friendly interface offering full CRUD operations and stylish user management features.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
