@@ -2,6 +2,19 @@ import type { AuthUser } from '../types'
 
 export const AUTH_API = `${import.meta.env.VITE_API_URL}/auth`;
 
+export interface AuthResponse {
+  token?: string
+  message?: string
+  user?: AuthUser
+}
+
+async function parseResponse(res: Response): Promise<AuthResponse> {
+  const data = await res.json().catch(() => ({}))
+  if (!res.ok) {
+    throw new Error(data.message || `Erreur ${res.status}`)
+  }
+  return data
+}
 export interface SignupPayload {
   firstName: string
   lastName: string
@@ -23,19 +36,6 @@ export interface ResendVerificationPayload {
   email: string
 }
 
-export interface AuthResponse {
-  token?: string
-  message?: string
-  user?: AuthUser
-}
-
-async function parseResponse(res: Response): Promise<AuthResponse> {
-  const data = await res.json().catch(() => ({}))
-  if (!res.ok) {
-    throw new Error(data.message || `Erreur ${res.status}`)
-  }
-  return data
-}
 
 // POST /auth/signup
 export async function signup(payload: SignupPayload): Promise<AuthResponse> {

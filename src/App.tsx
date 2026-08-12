@@ -8,7 +8,7 @@ import { StudentsPage } from './pages/StudentsPage'
 
 type View = 'login' | 'signup' | 'verify'
 
-function UnauthenticatedApp() {
+export function UnauthenticatedApp() {
   const [view, setView] = useState<View>('login')
   const [pendingEmail, setPendingEmail] = useState('')
 
@@ -34,9 +34,16 @@ function UnauthenticatedApp() {
     )
   }
 
-  return <LoginPage onGoToSignup={() => setView('signup')} />
+  return (
+    <LoginPage
+      onGoToSignup={() => setView('signup')}
+      onNeedsVerification={email => {
+        setPendingEmail(email)
+        setView('verify')
+      }}
+    />
+  )
 }
-
 function AppShell() {
   const { isAuthenticated } = useAuth()
   return isAuthenticated ? <StudentsPage /> : <UnauthenticatedApp />

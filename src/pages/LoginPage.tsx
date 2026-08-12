@@ -5,11 +5,13 @@ import { login } from '../api/auth'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../context/ToastContext'
 
+
 interface LoginPageProps {
   onGoToSignup: () => void
+  onNeedsVerification: (email: string) => void
 }
 
-export function LoginPage({ onGoToSignup }: LoginPageProps) {
+export function LoginPage({ onGoToSignup, onNeedsVerification }: LoginPageProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -29,7 +31,13 @@ export function LoginPage({ onGoToSignup }: LoginPageProps) {
       setSession(res.token, res.user ?? null)
       showToast('success', 'Connexion réussie')
     } catch (err) {
-      showToast('error', err instanceof Error ? err.message : 'Échec de la connexion')
+      const msg = err instanceof Error ? err.message : 'Échec de la connexion'
+      if (msg.toLowerCase().includes('email not verified')) {
+        showToast('error', 'Email non vérifié, entrez votre code')
+        onNeedsVerification(email)
+        return
+      }
+      showToast('error', msg)
     } finally {
       setSubmitting(false)
     }
