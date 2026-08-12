@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 
-const API = 'https://students-3o49.onrender.com/students'
+const API = 'https://students-1-i5ss.onrender.com/students'
 
 interface Student {
   id: number | string
