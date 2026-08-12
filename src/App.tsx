@@ -10,9 +10,16 @@ interface Student {
 type FormData = Record<string, string>
 
 function getFields(students: Student[]): string[] {
-  if (!students.length) return ['name', 'email', 'age']
-  const keys = Object.keys(students[0]).filter(k => k !== 'id' && k !== '__v' && k !== '_id')
-  return keys.length ? keys : ['name', 'email', 'age']
+  if (!students.length) {
+    return ['firstName', 'lastName', 'email', 'age']
+  }
+
+  const keys = Object.keys(students[0])
+    .filter(k => k !== 'id' && k !== '__v' && k !== '_id')
+
+  return keys.length
+    ? keys
+    : ['firstName', 'lastName', 'email', 'age']
 }
 
 function getStudentId(s: Student): string {
