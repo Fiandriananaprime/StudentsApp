@@ -1,6 +1,6 @@
 import type { Student, FormData } from '../types'
 
-export const STUDENTS_API = 'http://localhost:8080/Students'
+export const STUDENTS_API = `${import.meta.env.VITE_API_URL}/Students`;
 
 function authHeaders(token?: string | null): Record<string, string> {
   return token ? { Authorization: `Bearer ${token}` } : {}

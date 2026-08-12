@@ -1,6 +1,6 @@
 import type { AuthUser } from '../types'
 
-export const AUTH_API = 'http://localhost:8080/auth'
+export const AUTH_API = `${import.meta.env.VITE_API_URL}/auth`;
 
 export interface SignupPayload {
   firstName: string
